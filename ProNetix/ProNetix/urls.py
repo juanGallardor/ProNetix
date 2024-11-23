@@ -15,8 +15,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include  
+from django.conf import settings
+from django.conf.urls.static import static
+from ProNetix_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('', views.inicio, name='inicio'),
+    path('registro/', views.registro, name='registro'),
+    path('perfil/', views.perfil, name='perfil'),
+    path('perfil/subir-documento/', views.subir_documento, name='subir_documento'),
+    path('publicaciones/', views.publicaciones, name='publicaciones'),
+    path('publicaciones/nueva/', views.crear_publicacion, name='crear_publicacion'),
+    path('publicaciones/<int:pk>/editar/', views.editar_publicacion, name='editar_publicacion'),
+    path('publicaciones/<int:pk>/eliminar/', views.eliminar_publicacion, name='eliminar_publicacion'),
+    path('buscar/', views.busqueda, name='busqueda'),
+    path('empresa/', views.gestionar_empresa, name='gestionar_empresa'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
