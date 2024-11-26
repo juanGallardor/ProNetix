@@ -1,0 +1,26 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}Confirmar eliminación de empresa{% endblock %}
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/empresas.css' %}">
+
+<div class="container-empresa">
+    <div class="empresa-header">
+        <h1>Confirmar eliminación de empresa</h1>
+    </div>
+
+    <div class="seccion-info-empresa">
+        <p>¿Estás seguro de que deseas eliminar la empresa "{{ empresa.nombre_empresa }}"?</p>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="botones-accion">
+            <button type="submit" class="boton-eliminar">Eliminar</button>
+            <a href="{% url 'gestionar_empresa' %}" class="boton-cancelar">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

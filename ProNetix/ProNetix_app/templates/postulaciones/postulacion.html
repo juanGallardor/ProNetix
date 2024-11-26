@@ -1,0 +1,129 @@
+{# postulacion.html #}
+{% extends 'pronetix/base.html' %}
+{% block title %}Postular - {{ publicacion.titulo }}{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/postulacion.css' %}">
+
+<div class="postulacion-container">
+    <div class="postulacion-header">
+        <h1>Postular a: {{ publicacion.titulo }}</h1>
+    </div>
+    
+    <div class="detalles-oferta">
+        <h2>Detalles de la oferta:</h2>
+        <div class="detalle-item">
+            <span class="detalle-label">Empresa:</span>
+            <span class="detalle-valor">{{ publicacion.empresa.nombre_empresa }}</span>
+        </div>
+        <div class="detalle-item">
+            <span class="detalle-label">Ubicación:</span>
+            <span class="detalle-valor">{{ publicacion.ubicacion }}</span>
+        </div>
+        <div class="detalle-item">
+            <span class="detalle-label">Modalidad:</span>
+            <span class="detalle-valor">{{ publicacion.get_modalidad_display }}</span>
+        </div>
+    </div>
+
+    <form method="post" class="postulacion-form">
+        {% csrf_token %}
+        <div class="form-mensaje">
+            <label for="mensaje">Mensaje para el empleador (opcional):</label>
+            <textarea id="mensaje" name="mensaje" rows="4"></textarea>
+        </div>
+        <div class="postulacion-actions">
+            <button type="submit" class="btn-postular">Enviar postulación</button>
+            <a href="{% url 'ver_publicacion' publicacion.id %}" class="btn-cancelar">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{# ver_postulaciones.html #}
+{% extends 'pronetix/base.html' %}
+{% block title %}Postulaciones - {{ publicacion.titulo }}{% endblock %}
+{% block content %}
+
+<div class="ver-postulaciones-container">
+    <div class="details-card">
+        <h1>Postulaciones para: {{ publicacion.titulo }}</h1>
+        
+        {% if postulaciones %}
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Postulante</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Mensaje</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for postulacion in postulaciones %}
+                            <tr>
+                                <td>{{ postulacion.usuario.get_full_name }}</td>
+                                <td>{{ postulacion.fecha_postulacion }}</td>
+                                <td>{{ postulacion.get_estado_display }}</td>
+                                <td>
+                                    {% if postulacion.mensaje %}
+                                        {{ postulacion.mensaje }}
+                                    {% else %}
+                                        <em>Sin mensaje</em>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <form method="post" action="{% url 'actualizar_estado_postulacion' postulacion.id %}" class="estado-form">
+                                        {% csrf_token %}
+                                        <select name="estado" class="estado-select">
+                                            {% for estado, nombre in postulacion.estado.choices %}
+                                                <option value="{{ estado }}" {% if estado == postulacion.estado %}selected{% endif %}>
+                                                    {{ nombre }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                        <button type="submit" class="action-btn">Actualizar estado</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>Aún no hay postulaciones para esta oferta.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{# Botones de acción para la publicación #}
+{% if es_oferta_trabajo %}
+    {% if user.is_authenticated %}
+        {% if es_autor %}
+            <div class="header-actions">
+                <a href="{% url 'ver_postulaciones' publicacion.id %}">
+                    Ver postulaciones ({{ publicacion.postulaciones.count }})
+                </a>
+            </div>
+        {% else %}
+            {% if ya_postulado %}
+                <div class="empty-state">Ya te has postulado a esta oferta</div>
+            {% else %}
+                <div class="header-actions">
+                    <a href="{% url 'postular' publicacion.id %}">Postularme a esta oferta</a>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% else %}
+        <div class="empty-state">
+            Para postularte a esta oferta, necesitas 
+            <a href="{% url 'login' %}" class="action-btn">iniciar sesión</a> o 
+            <a href="{% url 'registro' %}" class="action-btn">registrarte</a>.
+        </div>
+    {% endif %}
+{% endif %}
+{% endblock %}

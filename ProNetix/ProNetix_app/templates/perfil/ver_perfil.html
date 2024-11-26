@@ -1,0 +1,96 @@
+{% extends 'pronetix/base.html' %} 
+{% load static %}
+{% block title %}Perfil - ProNetix{% endblock %}
+
+
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/profile.css' %}">
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">{{ perfil.usuario.get_full_name|default:perfil.usuario.username }}</h3>
+                    {% if request.user == perfil.usuario %}
+                        <a href="{% url 'editar_perfil' %}" class="btn btn-primary">Editar Perfil</a>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    {% if perfil.profesion %}
+                        <div class="mb-3">
+                            <h5>Profesión</h5>
+                            <p>{{ perfil.profesion }}</p>
+                        </div>
+                    {% endif %}
+
+                    {% if perfil.biografia %}
+                        <div class="mb-3">
+                            <h5>Biografía</h5>
+                            <p>{{ perfil.biografia }}</p>
+                        </div>
+                    {% endif %}
+
+                    <div class="row mb-3">
+                        {% if perfil.ubicacion %}
+                            <div class="col-md-6">
+                                <h5>Ubicación</h5>
+                                <p>{{ perfil.ubicacion }}</p>
+                            </div>
+                        {% endif %}as
+                        {% if perfil.modalidad_preferida %}
+                            <div class="col-md-6">
+                                <h5>Modalidad Preferida</h5>
+                                <p>{{ perfil.get_modalidad_preferida_display }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {% if perfil.habilidades %}
+                        <div class="mb-3">
+                            <h5>Habilidades</h5>
+                            <div class="d-flex flex-wrap gap-2">
+                                {% for habilidad in perfil.habilidades.split %}
+                                    <span class="badge bg-primary">{{ habilidad }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Documentos</h5>
+                </div>
+                <div class="card-body">
+                    {% if perfil.documentos.all %}
+                        <ul class="list-group">
+                            {% for documento in perfil.documentos.all %}
+                                <li class="list-group-item">
+                                    <h6 class="mb-1">{{ documento.get_tipo_display }}</h6>
+                                    <p class="mb-1">{{ documento.titulo }}</p>
+                                    <small class="text-muted">{{ documento.institucion }}</small>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted">No hay documentos disponibles</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-body">
+                    <small class="text-muted">
+                        Miembro desde: {{ perfil.fecha_creacion|date:"d/m/Y" }}<br>
+                        Última actualización: {{ perfil.fecha_actualizacion|date:"d/m/Y" }}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}Nueva Oferta de Trabajo - ProNetix{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/publicacion.css' %}">
+
+<div class="ver-postulaciones-container">
+    <div class="header-actions">
+        <a href="{% url 'publicaciones' %}">Volver a publicaciones</a>
+    </div>
+
+    <div class="details-card formulario-publicacion">
+        <h1 class="form-title">Nueva Oferta de Trabajo</h1>
+
+        {% if messages %}
+            <div class="messages-container">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="POST" class="job-offer-form">
+            {% csrf_token %}
+
+            <div class="form-sections">
+                <div class="form-section">
+                    <h2 class="section-title">Información Básica</h2>
+                    
+                    <div class="form-group">
+                        <label for="{{ formulario.titulo.id_for_label }}" class="form-label">
+                            Título del puesto*
+                        </label>
+                        {{ formulario.titulo }}
+                        {% if formulario.titulo.errors %}
+                            <div class="error-messages">
+                                {% for error in formulario.titulo.errors %}
+                                    <span class="error-message">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ formulario.descripcion.id_for_label }}" class="form-label">
+                            Descripción del puesto*
+                        </label>
+                        {{ formulario.descripcion }}
+                        {% if formulario.descripcion.errors %}
+                            <div class="error-messages">
+                                {% for error in formulario.descripcion.errors %}
+                                    <span class="error-message">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">Detalles del Puesto</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="{{ formulario.modalidad.id_for_label }}" class="form-label">
+                                Modalidad de trabajo*
+                            </label>
+                            {{ formulario.modalidad }}
+                            {% if formulario.modalidad.errors %}
+                                <div class="error-messages">
+                                    {% for error in formulario.modalidad.errors %}
+                                        <span class="error-message">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ formulario.experiencia_requerida.id_for_label }}" class="form-label">
+                                Experiencia requerida*
+                            </label>
+                            {{ formulario.experiencia_requerida }}
+                            {% if formulario.experiencia_requerida.errors %}
+                                <div class="error-messages">
+                                    {% for error in formulario.experiencia_requerida.errors %}
+                                        <span class="error-message">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="{{ formulario.rango_salarial.id_for_label }}" class="form-label">
+                                Rango salarial*
+                            </label>
+                            {{ formulario.rango_salarial }}
+                            {% if formulario.rango_salarial.errors %}
+                                <div class="error-messages">
+                                    {% for error in formulario.rango_salarial.errors %}
+                                        <span class="error-message">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ formulario.ubicacion.id_for_label }}" class="form-label">
+                                Ubicación*
+                            </label>
+                            {{ formulario.ubicacion }}
+                            {% if formulario.ubicacion.errors %}
+                                <div class="error-messages">
+                                    {% for error in formulario.ubicacion.errors %}
+                                        <span class="error-message">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">Requisitos</h2>
+                    
+                    <div class="form-group">
+                        <label for="{{ formulario.requisitos.id_for_label }}" class="form-label">
+                            Requisitos del puesto*
+                        </label>
+                        {{ formulario.requisitos }}
+                        {% if formulario.requisitos.errors %}
+                            <div class="error-messages">
+                                {% for error in formulario.requisitos.errors %}
+                                    <span class="error-message">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">Publicar Oferta</button>
+                <a href="{% url 'publicaciones' %}" class="btn-cancel">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

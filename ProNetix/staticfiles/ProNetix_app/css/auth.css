@@ -1,0 +1,180 @@
+:root {
+    --color-background: #F0F5F9;
+    --color-container: #8EACCD;
+    --second-text: #7299C5;
+    --color-button: #76ABAE;    
+    --color-text: #8EACCD;
+}
+
+.contenedor-inicio-sesion,
+.contenedor-registro {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    margin: 2rem auto;
+}
+
+.contenedor-inicio-sesion h1,
+.contenedor-registro h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: var(--second-text);
+}
+
+.boton-social {
+    width: 100%;
+    font-family: "Poppins", sans-serif;
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 25px;
+    border: 1px solid var(--color-text);
+    background-color: white;
+    color: var(--color-text);
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.boton-social:hover {
+    background-color: var(--color-container);
+    color: white;
+    box-shadow: 1px 1px 10px var(--color-container);
+    text-shadow: 1px 2px 5px var(--color-background);
+}
+
+.divisor {
+    margin: 24px 0;
+    text-align: center;
+    color: var(--color-text);
+    position: relative;
+}
+
+.divisor::before,
+.divisor::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background-color: #ddd;
+}
+
+.divisor::before {
+    left: 0;
+}
+
+.divisor::after {
+    right: 0;
+}
+
+.campo-formulario {
+    margin: 10px 0;
+}
+
+.campo-formulario input {
+    font-family: "Poppins", sans-serif;
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid var(--second-text);
+    background-color: white;
+    color: var(--color-text);
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.campo-formulario input::placeholder {
+    color: #9C9C9C;
+}
+
+.campo-formulario input:focus {
+    outline: none;
+    border: 2px solid var(--second-text);
+    box-shadow: 1px 1px 5px var(--color-container);
+    background-color: white;
+}
+
+.boton-principal {
+    width: 100%;
+    height: 55px;
+    margin: 24px 0;
+    border-radius: 25px;
+    border: none;
+    background-color: var(--color-container);
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.boton-principal:hover {
+    background-color: var(--second-text);
+    box-shadow: 1px 1px 10px var(--color-container);
+    text-shadow: 1px 1px 4px var(--color-background);
+}
+
+.enlaces,
+.enlaces-adicionales {
+    margin-top: 24px;
+}
+
+.enlaces a,
+.enlaces-adicionales a {
+    color: var(--second-text);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.enlaces a:hover,
+.enlaces-adicionales a:hover {
+    text-decoration: underline;
+}
+
+.recordar-contrasena {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    color: var(--color-text);
+}
+
+.enlace-contrasena {
+    color: var(--second-text);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.enlace-contrasena:hover {
+    text-decoration: underline;
+}
+
+.mensaje-error {
+    background-color: #fee2e2;
+    border: 1px solid #ef4444;
+    color: #991b1b;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px); 
+    padding: 2rem;
+}

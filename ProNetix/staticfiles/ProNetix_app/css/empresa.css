@@ -1,0 +1,193 @@
+:root {
+    --color-background: #F0F5F9;
+    --color-container: #8EACCD;
+    --second-text: #7299C5;
+    --color-button: #76ABAE;    
+    --color-text: #1c2329;
+    --sidebar-width: 280px;
+}
+
+.empresas-layout {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) 1fr 250px;
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.sidebar-section {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    height: fit-content;
+}
+
+.sidebar-section h2 {
+    color: var(--second-text);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.empresas-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.empresa-preview {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    position: relative;
+}
+
+.empresa-preview:hover {
+    background-color: var(--color-background);
+    transform: translateX(5px);
+}
+
+.empresa-preview.active {
+    background-color: var(--color-background);
+    border-color: var(--color-container);
+    transform: translateX(5px);
+}
+
+.empresa-preview.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background-color: var(--color-container);
+    border-radius: 4px 0 0 4px;
+}
+
+.empresa-preview h3 {
+    color: var(--second-text);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.empresa-preview p {
+    color: var(--color-text);
+    font-size: 0.9rem;
+}
+
+.empresas-content {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.empresa-detail {
+    animation: fadeIn 0.3s ease;
+}
+
+.empresa-info-section {
+    background-color: var(--color-background);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.empresa-info-section:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.empresa-info-section h3 {
+    color: var(--second-text);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.no-empresa-selected {
+    text-align: center;
+    color: var(--color-text);
+    padding: 3rem;
+    background-color: var(--color-background);
+    border-radius: 8px;
+    opacity: 0.7;
+}
+
+.acciones-section {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    height: fit-content;
+}
+
+.acciones-section h2 {
+    color: var(--second-text);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.acciones-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.mi-empresa-button {
+    background-color: var(--color-container);
+    color: white;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.mi-empresa-button:hover {
+    background-color: var(--second-text);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 1200px) {
+    .empresas-layout {
+        grid-template-columns: 250px 1fr;
+    }
+    
+    .acciones-section {
+        grid-column: 1 / -1;
+        margin-top: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .empresas-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar-section,
+    .acciones-section {
+        margin-bottom: 2rem;
+    }
+}

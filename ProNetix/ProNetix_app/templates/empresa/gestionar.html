@@ -1,0 +1,88 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}Gestionar Empresa - ProNetix{% endblock %}
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/empresas.css' %}">
+
+<div class="container-empresa">
+    <div class="empresa-header">
+        <h1>{% if es_nueva %}Registrar{% else %}Gestionar{% endif %} Empresa</h1>
+    </div>
+
+    {% if form.errors %}
+    <div class="mensaje-error">
+        {% for field in form %}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    {{ error }}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label>Nombre de la empresa:</label>
+            {{ form.nombre_empresa }}
+        </div>
+
+        <div class="form-group">
+            <label>Descripción:</label>
+            {{ form.descripcion }}
+            <small class="texto-ayuda">Describe brevemente la actividad de tu empresa</small>
+        </div>
+
+        <div class="form-group">
+            <label>Sitio web:</label>
+            {{ form.sitio_web }}
+        </div>
+
+        <div class="form-group">
+            <label>Ubicación:</label>
+            {{ form.ubicacion }}
+        </div>
+
+        <div class="botones-accion">
+            <button type="submit" class="boton-editar">
+                {% if es_nueva %}Registrar Empresa{% else %}Guardar Cambios{% endif %}
+            </button>
+            <a href="{% url 'empresas' %}" class="boton-editar">Cancelar</a>
+        </div>
+    </form>
+
+    {% if not es_nueva %}
+    <div class="seccion-info-empresa">
+        <h2>Mis Publicaciones</h2>
+        
+        {% if publicaciones %}
+        <div class="lista-publicaciones">
+            {% for publicacion in publicaciones %}
+            <div class="publicacion-card">
+                <h3>{{ publicacion.titulo }}</h3>
+                <div class="estado-publicacion">
+                    Estado: {% if publicacion.activa %}
+                    <span class="estado-activo">Activa</span>
+                    {% else %}
+                    <span class="estado-inactivo">Inactiva</span>
+                    {% endif %}
+                </div>
+                <div class="botones-accion">
+                    <a href="{% url 'editar_publicacion' publicacion.id %}" class="boton-editar">Editar</a>
+                    <a href="{% url 'eliminar_publicacion' publicacion.id %}" class="boton-editar">Eliminar</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No tienes publicaciones activas.</p>
+        <a href="{% url 'crear_publicacion' %}" class="boton-guardar">Crear Primera Publicación</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}Mi Empresa - ProNetix{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/empresas.css' %}">
+
+<div class="mi-empresa-container">
+    <div class="empresa-header">
+        <h1>{{ empresa.nombre_empresa }}</h1>
+        <a href="{% url 'editar_empresa' empresa.id %}" class="boton-editar">Editar Empresa</a>
+    </div>
+
+    <div class="seccion-info-empresa">
+        <h2>Información de la Empresa</h2>
+        <div class="campo-empresa">
+            <label>Ubicación:</label>
+            <span>{{ empresa.ubicacion }}</span>
+        </div>
+        <div class="campo-empresa">
+            <label>Sitio Web:</label>
+            <span>{{ empresa.sitio_web|default:"No especificado" }}</span>
+        </div>
+        <div class="campo-empresa">
+            <label>Descripción:</label>
+            <p>{{ empresa.descripcion }}</p>
+        </div>
+    </div>
+
+    <div class="seccion-ofertas">
+        <div class="ofertas-header">
+            <h2>Ofertas de Trabajo Publicadas</h2>
+            <a href="{% url 'crear_oferta_trabajo' %}" class="boton-agregar">Publicar Nueva Oferta</a>
+        </div>
+        
+        {% if publicaciones %}
+            <div class="lista-ofertas">
+                {% for publicacion in publicaciones %}
+                    <div class="oferta">
+                        <h3>{{ publicacion.titulo }}</h3>
+                        <p>Publicada: {{ publicacion.fecha_creacion|date:"d/m/Y" }}</p>
+                        <div class="acciones-oferta">
+                            <a href="{% url 'ver_publicacion' publicacion.id %}" class="boton-ver">Ver Oferta</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="sin-ofertas">No hay ofertas de trabajo publicadas.</p>
+        {% endif %}
+    </div>
+
+    <div class="seccion-postulaciones">
+        <h2>Postulaciones Recibidas</h2>
+        
+        {% if postulaciones %}
+            <div class="lista-postulaciones">
+                {% for postulacion in postulaciones %}
+                    <div class="postulacion">
+                        <div class="info-postulacion">
+                            <h3>{{ postulacion.usuario.get_full_name }}</h3>
+                            <p>Oferta: {{ postulacion.publicacion.titulo }}</p>
+                            <p>Fecha: {{ postulacion.fecha_postulacion|date:"d/m/Y" }}</p>
+                            <p>Estado actual: {{ postulacion.get_estado_display }}</p>
+                            {% if postulacion.mensaje %}
+                                <p>Mensaje: {{ postulacion.mensaje }}</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="acciones-postulacion">
+                            <a href="{% url 'actualizar_estado_postulacion' postulacion.id %}" class="boton-actualizar">
+                                Actualizar Estado
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="sin-postulaciones">No hay postulaciones recibidas.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

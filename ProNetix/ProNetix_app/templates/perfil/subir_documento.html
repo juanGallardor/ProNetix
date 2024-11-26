@@ -1,0 +1,65 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}Subir Documento - ProNetix{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/profile.css' %}">
+<div class="contenedor-subir-documento">
+    
+    <h1>Subir Nuevo Documento</h1>
+
+    <form method="POST" enctype="multipart/form-data" action="">
+        {% csrf_token %}
+        
+        {% if form.errors %}
+        <div class="mensajes-error">
+            {% for field in form %}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                    <div class="mensaje-error">
+                        {{ error }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="campo-form">
+            <label for="{{ form.tipo.id_for_label }}">Tipo de documento:</label>
+            {{ form.tipo }}
+        </div>
+
+        <div class="campo-form">
+            <label for="{{ form.titulo.id_for_label }}">Título:</label>
+            {{ form.titulo }}
+        </div>
+
+        <div class="campo-form">
+            <label for="{{ form.institucion.id_for_label }}">Institución:</label>
+            {{ form.institucion }}
+        </div>
+
+        <div class="campo-form">
+            <label for="{{ form.fecha_emision.id_for_label }}">Fecha de emisión:</label>
+            {{ form.fecha_emision }}
+        </div>
+
+        <div class="campo-form">
+            <label for="{{ form.descripcion.id_for_label }}">Descripción:</label>
+            {{ form.descripcion }}
+        </div>
+
+        <div class="campo-form archivo">
+            <label for="{{ form.archivo.id_for_label }}">Archivo:</label>
+            {{form.archivo }}
+            <span class="small">Formatos permitidos: PDF, DOC, DOCX, JPG, PNG</span>
+        </div>
+
+        <div class="botones-form">
+            <button type="submit"  class="boton-agregar-documento">Subir Documento</button>
+            <a href="{% url 'perfil' %}"  class="boton-agregar-documento">>Cancelar</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

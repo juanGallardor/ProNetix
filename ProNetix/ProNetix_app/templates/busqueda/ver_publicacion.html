@@ -1,0 +1,89 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}{{ publicacion.titulo }} - ProNetix{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/busqueda.css' %}">
+
+{% extends 'pronetix/base.html' %}
+{% block title %}{{ publicacion.titulo }} - ProNetix{% endblock %}
+{% block content %}
+
+<div class="container fade-in">
+    <article class="publicacion-container section">
+        <header class="card">
+            <h1>{{ publicacion.titulo }}</h1>
+            <div class="meta-info">
+                <a href="{% url 'ver_empresa' publicacion.empresa.id %}" class="tag">
+                    {{ publicacion.empresa.nombre_empresa }}
+                </a>
+                <span class="tag">Publicado: {{ publicacion.fecha_publicacion }}</span>
+            </div>
+        </header>
+
+        <div class="publicacion-contenido">
+            {% if publicacion.descripcion %}
+                <section class="section">
+                    <h2>Descripción del puesto</h2>
+                    <div class="texto-descripcion">
+                        {{ publicacion.descripcion|linebreaks }}
+                    </div>
+                </section>
+            {% endif %}
+
+            {% if publicacion.requisitos %}
+                <section class="section">
+                    <h2>Requisitos</h2>
+                    <div class="texto-requisitos">
+                        {{ publicacion.requisitos|linebreaks }}
+                    </div>
+                </section>
+            {% endif %}
+
+            <section class="section">
+                <h2>Detalles del empleo</h2>
+                <div class="grid-detalles">
+                    {% if publicacion.ubicacion %}
+                        <div class="campo">
+                            <span class="etiqueta">Ubicación:</span>
+                            <span class="valor">{{ publicacion.ubicacion }}</span>
+                        </div>
+                    {% endif %}
+                    {% if publicacion.modalidad %}
+                        <div class="campo">
+                            <span class="etiqueta">Modalidad:</span>
+                            <span class="valor">{{ publicacion.get_modalidad_display }}</span>
+                        </div>
+                    {% endif %}
+                    {% if publicacion.tipo_contrato %}
+                        <div class="campo">
+                            <span class="etiqueta">Tipo de contrato:</span>
+                            <span class="valor">{{ publicacion.get_tipo_contrato_display }}</span>
+                        </div>
+                    {% endif %}
+                    {% if publicacion.salario %}
+                        <div class="campo">
+                            <span class="etiqueta">Salario:</span>
+                            <span class="valor">{{ publicacion.salario }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </section>
+
+            {% if user.is_authenticated %}
+                <div class="section">
+                    {% csrf_token %}
+                    <button class="button">Postularme a esta oferta</button>
+                </div>
+            {% else %}
+                <div class="section">
+                    <p>Para postularte a esta oferta, necesitas 
+                        <a href="{% url 'login' %}">iniciar sesión</a> o
+                        <a href="{% url 'registro' %}">registrarte</a>.
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    </article>
+</div>
+
+{% endblock %}

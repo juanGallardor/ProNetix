@@ -1,0 +1,136 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}{{ publicacion.titulo }} - ProNetix{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/publicacion.css' %}">
+
+<div class="ver-postulaciones-container">
+    <div class="header-actions">
+        <a href="{% url 'publicaciones' %}">Volver a publicaciones</a>
+    </div>
+
+    <div class="details-card">
+        <div class="publication-header">
+            <h1 class="publication-title">{{ publicacion.titulo }}</h1>
+            
+            {% if publicacion.empresa %}
+                <div class="publication-content">
+                    <h2><span class="epublication-content">{{ publicacion.empresa.nombre_empresa }}</span>
+                    {% if publicacion.empresa.sitio_web %}
+                        <a href="{{ publicacion.empresa.sitio_web }}" class="website-link" target="_blank">
+                            Visitar sitio web
+                        </a></h2>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            {% if es_autor %}
+                <div class="author-actions">
+                    <a href="{% url 'editar_publicacion' pk=publicacion.id %}" class="edit-btn">Editar</a>
+                    <a href="{% url 'eliminar_publicacion' pk=publicacion.id %}" class="delete-btn">Eliminar</a>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="publication-content">
+            {% if es_oferta_trabajo %}
+                <section class="content-section">
+                    <h2>Detalles del puesto</h2>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Modalidad:</span>
+                            <span class="detail-value">{{ publicacion.get_modalidad_display }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Experiencia:</span>
+                            <span class="detail-value">{{ publicacion.get_experiencia_requerida_display }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Salario:</span>
+                            <span class="detail-value">{{ publicacion.get_rango_salarial_display }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Ubicación:</span>
+                            <span class="detail-value">{{ publicacion.ubicacion }}</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="content-section">
+                    <h2>Información de la empresa</h2>
+                    <div class="section-content">
+                        {{ publicacion.empresa.descripcion }}
+                    </div>
+                </section>
+
+                <section class="content-section">
+                    <h2>Descripción del puesto</h2>
+                    <div class="section-content">
+                        {{ publicacion.descripcion|linebreaks }}
+                    </div>
+                </section>
+
+                {% if publicacion.requisitos %}
+                    <section class="content-section">
+                        <h2>Requisitos</h2>
+                        <div class="section-content">
+                            {{ publicacion.requisitos|linebreaks }}
+                        </div>
+                    </section>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                    {% if es_autor %}
+                        <section class="content-section">
+                            <h2>Postulaciones recibidas</h2>
+                            <div class="section-content">
+                                <a href="{% url 'ver_postulaciones' publicacion.id %}" class="view-more-btn">
+                                    Ver postulaciones {% if publicacion.postulaciones.all.count %}
+                                        ({{ publicacion.postulaciones.all.count }})
+                                    {% endif %}
+                                </a>
+                            </div>
+                        </section>
+                    {% else %}
+                        <div class="actions-section">
+                            {% if ya_postulado %}
+                                <div class="already-applied">
+                                    Ya te has postulado a esta oferta
+                                </div>
+                            {% else %}
+                                <a href="{% url 'postular' publicacion.id %}" class="view-more-btn">
+                                    Postularme a esta oferta
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="login-message">
+                        Para postularte a esta oferta, necesitas 
+                        <a href="{% url 'login' %}" class="login-link">iniciar sesión</a> o
+                        <a href="{% url 'registro' %}" class="login-link">registrarte</a>.
+                    </div>
+                {% endif %}
+            {% else %}
+                {% endif %}
+                <div class="section-content">
+                    <p>{{ publicacion.descripcion|linebreaks }}</p>
+                    <p>.</p>
+                </div>
+                {% if publicacion.imagen %}
+                    <div class="publication-image">
+                        <img src="{{ publicacion.imagen.url }}" alt="Imagen de {{ publicacion.titulo }}">
+                    </div>
+            {% endif %}
+
+            <div class="publication-meta">
+                <div class="meta-info">
+                    <span>Publicado por: {{ publicacion.autor.get_full_name|default:publicacion.autor.username }}</span>
+                    <span>Fecha: {{ publicacion.fecha_creacion|date:"d M Y, H:i" }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}Perfil - {{ perfil.usuario.get_full_name }} - ProNetix{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/busqu.css' %}">
+
+<div class="container fade-in">
+    <div class="perfil-publico-container">
+        <header class="perfil-header">
+            <div class="header-content">
+                <h1>{{ perfil.usuario.get_full_name }}</h1>
+                {% if perfil.profesion %}
+                    <h2>{{ perfil.profesion }}</h2>
+                {% endif %}
+            </div>
+        </header>
+
+        <div class="perfil-contenido">
+            <section class="section informacion-basica">
+                <h3>Información Personal</h3>
+                <div class="campos-container">
+                    {% if perfil.ubicacion %}
+                        <div class="campo">
+                            <span class="etiqueta">Ubicación:</span>
+                            <span class="valor">{{ perfil.ubicacion }}</span>
+                        </div>
+                    {% endif %}
+                    {% if perfil.modalidad_preferida %}
+                        <div class="campo">
+                            <span class="etiqueta">Modalidad de trabajo:</span>
+                            <span class="valor">{{ perfil.get_modalidad_preferida_display }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </section>
+
+            {% if perfil.biografia %}
+                <section class="section biografia">
+                    <h3>Biografía</h3>
+                    <div class="texto-biografia">
+                        {{ perfil.biografia|linebreaks }}
+                    </div>
+                </section>
+            {% endif %}
+
+            {% if perfil.habilidades %}
+                <section class="section habilidades">
+                    <h3>Habilidades</h3>
+                    <div class="lista-habilidades">
+                        {% for habilidad in perfil.habilidades_lista %}
+                            <span class="tag">{{ habilidad }}</span>
+                        {% endfor %}
+                    </div>
+                </section>
+            {% endif %}
+
+            <section class="section documentos">
+                <h3>Documentos y Certificaciones</h3>
+                {% if perfil.documentos.all %}
+                    <div class="grid grid-2">
+                        {% for documento in perfil.documentos.all %}
+                            <article class="card documento">
+                                <div class="documento-header">
+                                    <span class="tag tipo-documento">{{ documento.get_tipo_display }}</span>
+                                    <h4>{{ documento.titulo }}</h4>
+                                </div>
+                                <div class="documento-contenido">
+                                    <div class="campo">
+                                        <span class="etiqueta">Institución:</span>
+                                        <span class="valor">{{ documento.institucion }}</span>
+                                    </div>
+                                    <div class="campo">
+                                        <span class="etiqueta">Fecha:</span>
+                                        <span class="valor">{{ documento.fecha_emision }}</span>
+                                    </div>
+                                    {% if documento.descripcion %}
+                                        <p class="documento-descripcion">{{ documento.descripcion }}</p>
+                                    {% endif %}
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="no-documentos">No hay documentos disponibles</p>
+                {% endif %}
+            </section>
+        </div>
+    </div>
+</div>
+
+<style>
+    .header-content {
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .campos-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .documento-header {
+        margin-bottom: 1rem;
+    }
+
+    .documento-contenido {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .tipo-documento {
+        margin-bottom: 0.5rem;
+        display: inline-block;
+    }
+
+    .documento-descripcion {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .no-documentos {
+        text-align: center;
+        color: var(--color-text);
+        opacity: 0.7;
+        padding: 2rem;
+    }
+
+    @media (max-width: 768px) {
+        .header-content {
+            padding: 1.5rem;
+        }
+        
+        .grid-2 {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}

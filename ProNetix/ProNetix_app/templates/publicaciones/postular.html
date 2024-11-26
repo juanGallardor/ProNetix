@@ -1,0 +1,57 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}Postular - {{ publicacion.titulo }}{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/postulacion.css' %}">
+
+<div class="postulacion-container">
+    <a href="{% url 'ver_publicacion' publicacion.id %}" class="btn-volver">
+        <i class="fas fa-arrow-left"></i> Volver a la publicación
+    </a>
+
+    <div class="postulacion-header">
+        <h1>Postular a: {{ publicacion.titulo }}</h1>
+    </div>
+    
+    <div class="detalles-oferta">
+        <h2>Detalles de la oferta:</h2>
+        <div class="detalles-grid">
+            <div class="detalle-item">
+                <span class="detalle-label">Empresa:</span>
+                <span class="detalle-valor">{{ publicacion.empresa.nombre_empresa }}</span>
+            </div>
+            <div class="detalle-item">
+                <span class="detalle-label">Ubicación:</span>
+                <span class="detalle-valor">{{ publicacion.ubicacion }}</span>
+            </div>
+            <div class="detalle-item">
+                <span class="detalle-label">Modalidad:</span>
+                <span class="detalle-valor">{{ publicacion.get_modalidad_display }}</span>
+            </div>
+            {% if publicacion.salario %}
+            <div class="detalle-item">
+                <span class="detalle-label">Salario:</span>
+                <span class="detalle-valor">{{ publicacion.get_rango_salarial_display }}</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="descripcion-puesto">
+            <h3>Descripción del puesto:</h3>
+            <p>{{ publicacion.descripcion|truncatewords:50 }}</p>
+        </div>
+    </div>
+
+    <form method="post" class="postulacion-form">
+        {% csrf_token %}
+        <div class="form-mensaje">
+            <label for="mensaje">Mensaje para el empleador (opcional):</label>
+            <textarea id="mensaje" name="mensaje" rows="6" placeholder="Escribe un mensaje personalizado para el empleador..."></textarea>
+        </div>
+        <div class="postulacion-actions">
+            <button type="submit" class="btn-cancelar">Enviar postulación</button>
+            <a href="{% url 'ver_publicacion' publicacion.id %}" class="btn-cancelar">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

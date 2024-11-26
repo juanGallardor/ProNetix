@@ -1,0 +1,117 @@
+{% extends 'pronetix/base.html' %}
+{% load static %}
+{% block title %}Mi Perfil - ProNetix{% endblock %}
+
+{% block content %}
+<div class="perfil-container">
+    <link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/profile.css' %}">
+    <div class="perfil-header">
+        <h1>Mi Perfil</h1>
+        <a href="{% url 'editar_perfil' %}" class="boton-editar">Editar Perfil</a>
+    </div>
+
+    <div class="seccion-perfil info-personal">
+        <h2>Información Personal</h2>
+        <div class="campo-perfil">
+            <label>Nombre:</label>
+            <span>{{ user.first_name }} {{ user.last_name }}</span>
+        </div>
+        <div class="campo-perfil">
+            <label>Profesión:</label>
+            <span>{{ user.perfil.profesion|default:"No especificada" }}</span>
+        </div>
+        <div class="campo-perfil">
+            <label>Ubicación:</label>
+            <span>{{ user.perfil.ubicacion|default:"No especificada" }}</span>
+        </div>
+        <div class="campo-perfil">
+            <label>Modalidad Preferida:</label>
+            <span>{{ user.perfil.get_modalidad_preferida_display|default:"No especificada" }}</span>
+        </div>
+    </div>
+
+    <div class="seccion-perfil biografia">
+        <h2>Biografía</h2>
+        <p>{{ user.perfil.biografia|default:"Sin biografía"|linebreaks }}</p>
+    </div>
+
+    <div class="seccion-perfil habilidades">
+        <h2>Habilidades</h2>
+        {% if habilidades %}
+            <div class="lista-habilidades">
+                {% for habilidad in habilidades %}
+                    <span class="etiqueta-habilidad">{{ habilidad }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No hay habilidades especificadas</p>
+        {% endif %}
+    </div>
+
+    <div class="seccion-perfil documentos">
+        <div class="documentos-header">
+            <h2>Mis Documentos</h2>
+            <a href="{% url 'subir_documento' %}"  class="boton-agregar-documento">">Agregar Documento</a>
+        </div>
+        
+        {% if user.perfil.documentos.all %}
+            <div class="lista-documentos">
+                {% for documento in user.perfil.documentos.all %}
+                    <div class="documento">
+                        <div class="info-documento">
+                            <h3>{{ documento.titulo }}</h3>
+                            <p>{{ documento.get_tipo_display }} - {{ documento.institucion }}</p>
+                            <p>Fecha: {{ documento.fecha_emision }}</p>
+                        </div>
+                        <div class="acciones-documento">
+                            <a href="{{ documento.archivo.url }}" class="boton-agregar-documento" target="_blank">Ver</a>
+                            <form method="POST" action="{% url 'eliminar_documento' documento.id %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="boton-agregar-documento" 
+                                        onclick="return confirm('¿Estás seguro de que deseas eliminar este documento?');">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="sin-documentos">No tienes documentos subidos.</p>
+        {% endif %}
+    </div>
+
+    <div class="seccion-perfil postulaciones">
+        <div class="postulaciones-header">
+            <h2>Mis Postulaciones</h2>
+        </div>
+        
+        {% if user.postulaciones.all %}
+            <div class="lista-postulaciones">
+                {% for postulacion in user.postulaciones.all %}
+                    <div class="postulacion">
+                        <div class="info-postulacion">
+                            <h3>{{ postulacion.publicacion.titulo }}</h3>
+                            <p>Empresa: {{ postulacion.publicacion.empresa.nombre_empresa }}</p>
+                            <p>Estado: {{ postulacion.get_estado_display }}</p>
+                            <p>Fecha de postulación: {{ postulacion.fecha_postulacion|date:"d/m/Y" }}</p>
+                        </div>
+                        <div class="acciones-postulacion">
+                            <a href="{% url 'ver_publicacion' postulacion.publicacion.id %}" class="boton-agregar-documento">Ver Oferta</a>
+                            <form method="POST" action="{% url 'retirar_postulacion' postulacion.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="boton-agregar-documento" 
+                                        onclick="return confirm('¿Estás seguro de que deseas retirar tu postulación?');">
+                                    Retirar Postulación
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="sin-postulaciones">No has realizado postulaciones aún.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

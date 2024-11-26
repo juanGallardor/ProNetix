@@ -1,0 +1,207 @@
+:root {
+    --color-background: #F0F5F9;
+    --color-container: #8EACCD;
+    --second-text: #7299C5;
+    --color-button: #76ABAE;    
+    --color-text: #1c2329;
+}
+
+.perfil-container,
+.editar-perfil-container,
+.contenedor-subir-documento {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 800px;
+}
+
+.perfil-header,
+.editar-perfil-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-container);
+}
+
+.perfil-header h1,
+.editar-perfil-header h1,
+.contenedor-subir-documento h1 {
+    color: var(--second-text);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.seccion-perfil {
+    background-color: #F0F5F9;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.seccion-perfil h2,
+.editar-perfil-container h2 {
+    color: var(--second-text);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.campo-form {
+    margin-bottom: 1.5rem;
+}
+
+.campo-form label {
+    color: var(--second-text);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.campo-form input,
+.campo-form textarea,
+.campo-form select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--color-container);
+    border-radius: 8px;
+    background-color: white;
+    font-family: "Poppins", sans-serif;
+    color: var(--color-text);
+    transition: all 0.3s ease;
+}
+
+.campo-form input:focus,
+.campo-form textarea:focus,
+.campo-form select:focus {
+    outline: none;
+    border-color: var(--second-text);
+    box-shadow: 0 0 0 2px rgba(114, 153, 197, 0.2);
+}
+
+.campo-form.archivo {
+    position: relative;
+}
+
+.campo-form.archivo input[type="file"] {
+    padding: 1rem;
+    background-color: white;
+}
+
+.campo-form .small {
+    display: block;
+    color: var(--second-text);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.lista-habilidades {
+    color: var(--color-text);
+    background: none;
+    padding: 0;
+    border: none;
+    font-size: 0.9rem;
+}
+
+.boton-editar,
+.boton-agregar,
+.boton-agregar-documento {
+    background-color: var(--color-container);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+
+.boton-agregar-documento {
+    margin-bottom: 1rem;
+}
+
+.boton-editar:hover,
+.boton-agregar:hover,
+.boton-agregar-documento:hover {
+    background-color: var(--second-text);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.botones-form {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.boton-guardar {
+    background-color: var(--color-container);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    flex: 1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.boton-guardar:hover {
+    background-color: var(--second-text);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.boton-cancelar {
+    background-color: transparent;
+    color: var(--color-text);
+    border: 1px solid var(--color-container);
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.boton-cancelar:hover {
+    background-color: var(--color-background);
+}
+
+.mensaje-error {
+    background-color: #fee2e2;
+    border: 1px solid #ef4444;
+    color: #991b1b;
+    padding: 0.8rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .perfil-container,
+    .editar-perfil-container,
+    .contenedor-subir-documento {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    .perfil-header,
+    .editar-perfil-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .botones-form {
+        flex-direction: column;
+    }
+    
+    .boton-guardar,
+    .boton-cancelar {
+        width: 100%;
+        text-align: center;
+    }
+}

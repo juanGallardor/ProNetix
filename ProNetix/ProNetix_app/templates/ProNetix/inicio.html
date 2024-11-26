@@ -1,0 +1,44 @@
+{% extends 'pronetix/base.html' %} 
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/style.css' %}">
+<div class="hero">
+    <div class="developer-card">
+        <h1 class="hero-title">ProNetix</h1>
+        <div class="hero-line"></div>
+        <p class="hero-subtitle"><b>Conecta, Crece y Triunfa:</b> el lugar en donde tu talento encuentra oportunidades</p>
+        <div class="hero-line"></div>
+    </div>
+</div>
+
+<section class="section developers-section">
+    <h2 id="desarrolladores" class="section-title">Desarrolladores</h2>
+    <div class="developers-grid">
+        <div class="developer-card">
+            <div class="code-icon">&lt;&gt;</div>
+            <h3>Juan Gallardo</h3>
+            <p>desarrollador</p>
+        </div>
+
+        <div class="developer-card">
+            <div class="code-icon">&lt;&gt;</div>
+            <h3>Sebastian Lopez</h3>
+            <p>desarrollador</p>
+        </div>
+
+        <div class="developer-card">
+            <div class="code-icon">&lt;&gt;</div>
+            <h3>Miguel Mendoza</h3>
+            <p>desarrollador</p>
+        </div>
+
+        <div class="developer-card">
+            <div class="code-icon">&lt;&gt;</div>
+            <h3>Johan Castro</h3>
+            <p>desarrollador</p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

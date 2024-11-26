@@ -1,0 +1,95 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}Perfiles - ProNetix{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/views.css' %}">
+
+<div class="container">
+    <div class="publications-header">
+        <div class="publication-card"><h1>Perfiles Profesionales</h1></div>
+    </div>
+
+    <div class="publications-grid">
+        {% if perfiles %}
+            {% for perfil in perfiles %}
+                <div class="publication-card">
+                    <div class="author-section">
+                        <span class="author-name">{{ perfil.usuario.get_full_name }}</span>
+                    </div>
+
+                    <div class="publication-description">
+                        {% if perfil.profesion %}
+                            <p><strong>Profesión:</strong> {{ perfil.profesion }}</p>
+                        {% endif %}
+                        
+                        {% if perfil.ubicacion %}
+                            <p><strong>Ubicación:</strong> {{ perfil.ubicacion }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="publication-footer">
+                        <a href="#" class="view-more-btn" onclick="toggleDetalles('perfil-{{ perfil.id }}')">Ver más detalles</a>
+                    </div>
+
+                    <div id="perfil-{{ perfil.id }}" class="publication-description" style="display: none;">
+                        {% if perfil.modalidad_preferida %}
+                            <p><strong>Modalidad:</strong> {{ perfil.get_modalidad_preferida_display }}</p>
+                        {% endif %}
+
+                        {% if perfil.habilidades %}
+                            <div>
+                                <h3>Habilidades:</h3>
+                                <div class="skills-list">
+                                    {% for habilidad in perfil.habilidades_lista %}
+                                        <span>{{ habilidad }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if perfil.biografia %}
+                            <div>
+                                <h3>Biografía:</h3>
+                                <p>{{ perfil.biografia }}</p>
+                            </div>
+                        {% endif %}
+
+                        <div>
+                            <h3>Documentos y Certificaciones</h3>
+                            {% with docs=perfil.documentos.all %}
+                                {% if docs %}
+                                    <div class="documentos-lista">
+                                        {% for doc in docs %}
+                                            <div class="documento-item">
+                                                {{ doc.get_tipo_display }} - {{ doc.titulo }}
+                                                {% if doc.archivo %}
+                                                    <a href="{{ doc.archivo.url }}" class="view-more-btn" target="_blank">Ver certificado</a>
+                                                {% endif %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <p>No hay documentos disponibles</p>
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="publication-card">
+                <p>No se encontraron perfiles{% if busqueda %} para "{{ busqueda }}"{% endif %}</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function toggleDetalles(id) {
+    const detalles = document.getElementById(id);
+    if (detalles) {
+        detalles.style.display = detalles.style.display === 'none' ? 'block' : 'none';
+    }
+}
+</script>
+{% endblock %}

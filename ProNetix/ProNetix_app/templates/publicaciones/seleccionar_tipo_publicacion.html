@@ -1,0 +1,45 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}Crear Nueva Publicación - ProNetix{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/publicacion.css' %}">
+
+<div class="ver-postulaciones-container">
+    <div class="header-actions">
+        <a href="{% url 'publicaciones' %}">Volver a publicaciones</a>
+    </div>
+
+    <div class="details-card">
+        <h1 class="selection-title">¿Qué deseas crear?</h1>
+
+        <div class="publication-types">
+            <div class="type-card">
+                <div class="type-icon">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+                <h2 class="type-title">Publicación General</h2>
+                <p class="type-description">
+                    Comparte información, experiencias o conocimientos con la comunidad
+                </p>
+                <a href="{% url 'crear_publicacion' %}" class="type-button">
+                    Crear Publicación
+                </a>
+            </div>
+
+            <div class="type-card">
+                <div class="type-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <h2 class="type-title">Oferta de Trabajo</h2>
+                <p class="type-description">
+                    Publica una oferta laboral para encontrar el talento que tu empresa necesita
+                </p>
+                <a href="{% url 'crear_oferta_trabajo' %}" class="type-button">
+                    Crear Oferta de Trabajo
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

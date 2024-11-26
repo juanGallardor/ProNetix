@@ -1,0 +1,94 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}Resultados de búsqueda - ProNetix{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/busqueda.css' %}">
+
+<div class="resultados-layout">
+    <div class="filtros-section">
+        <h2>En esta página</h2>
+        <div class="resultados-list">
+            <div class="resultado-preview">
+                <h3>Perfiles</h3>
+                <p>{{ resultados.perfiles|length }} resultados</p>
+            </div>
+            <div class="resultado-preview">
+                <h3>Empresas</h3>
+                <p>{{ resultados.empresas|length }} resultados</p>
+            </div>
+            <div class="resultado-preview">
+                <h3>Publicaciones</h3>
+                <p>{{ resultados.publicaciones|length }} resultados</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="resultados-content">
+        <div class="resultados-section">
+            <h2>Perfiles</h2>
+            {% if resultados.perfiles %}
+                <div class="resultados-list">
+                    {% for perfil in resultados.perfiles %}
+                        <div class="resultado-preview">
+                            <h3>{{ perfil.usuario.get_full_name }}</h3>
+                            {% if perfil.profesion %}
+                                <p>{{ perfil.profesion }}</p>
+                            {% endif %}
+                            <a href="{% url 'ver_perfil' perfil.id %}" class="ver-mas-button publicacion">Ver perfil</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No se encontraron perfiles</p>
+            {% endif %}
+        </div>
+
+        <div class="resultados-section">
+            <h2>Empresas</h2>
+            {% if resultados.empresas %}
+                <div class="resultados-list">
+                    {% for empresa in resultados.empresas %}
+                        <div class="resultado-preview">
+                            <h3>{{ empresa.nombre_empresa }}</h3>
+                            {% if empresa.ubicacion %}
+                                <p>{{ empresa.ubicacion }}</p>
+                            {% endif %}
+                            <a href="{% url 'ver_empresa' empresa.id %}" class="ver-mas-button publicacion">Ver empresa</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No se encontraron empresas</p>
+            {% endif %}
+        </div>
+
+        <div class="resultados-section">
+            <h2>Publicaciones</h2>
+            {% if resultados.publicaciones %}
+                <div class="resultados-list">
+                    {% for publicacion in resultados.publicaciones %}
+                        <div class="resultado-preview">
+                            <h3>{{ publicacion.titulo }}</h3>
+                            <p>
+                                {% if publicacion.tipo == 'TRABAJO' %}
+                                    Oferta de Trabajo
+                                {% else %}
+                                    Publicación Normal
+                                {% endif %}
+                                {% if publicacion.empresa__nombre_empresa %}
+                                    - {{ publicacion.empresa__nombre_empresa }}
+                                {% endif %}
+                            </p>
+                            <a href="{% url 'ver_publicacion' publicacion.id %}" class="ver-mas-button publicacion">Ver publicación</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No se encontraron publicaciones</p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

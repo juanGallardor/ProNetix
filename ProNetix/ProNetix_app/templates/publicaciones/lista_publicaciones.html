@@ -1,0 +1,45 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}Publicaciones - ProNetix{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/publicacion.css' %}">
+
+
+<div class="container">
+    <div class="publications-header">
+        <div class="publication-card"><h1>Publicaciones</h1>
+        {% if user.is_authenticated %}
+        
+            <a href="{% url 'seleccionar_tipo_publicacion' %}" class="create-button">Crear Publicación</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="publications-grid">
+        {% for publicacion in publicaciones %}
+        <div class="publication-card">
+            <div class="author-section">
+                <span class="author-name">{{ publicacion.autor.username }}</span>
+                <span class="publication-date">{{ publicacion.fecha_creacion|date:"d M Y" }}</span>
+            </div>
+
+            <h2 class="publication-title">{{ publicacion.titulo }}</h2>
+            <p class="publication-description">{{ publicacion.descripcion|truncatewords:30 }}</p>
+
+            {% if publicacion.imagen %}
+            <img src="{{ publicacion.imagen.url }}" alt="Imagen de la publicación" class="publication-image">
+            {% endif %}
+
+            <div class="publication-footer">
+                <a href="{% url 'ver_publicacion' publicacion.id %}" class="view-more-btn">Ver más</a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="publication-card">
+            <p>No hay publicaciones disponibles.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}Nueva Publicación - ProNetix{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/publicacion.css' %}">
+
+<div class="ver-postulaciones-container">
+    <div class="header-actions">
+        <a href="{% url 'publicaciones' %}">Volver a publicaciones</a>
+    </div>
+
+    <div class="details-card formulario-publicacion">
+        <h1 class="form-title">Nueva Publicación</h1>
+
+        <form method="POST" enctype="multipart/form-data" class="publication-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_titulo" class="form-label">
+                    Título de la publicación*
+                </label>
+                {{ formulario.titulo }}
+                {% if formulario.titulo.errors %}
+                    <div class="error-messages">
+                        {% for error in formulario.titulo.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_descripcion" class="form-label">
+                    Descripción*
+                </label>
+                {{ formulario.descripcion }}
+                {% if formulario.descripcion.errors %}
+                    <div class="error-messages">
+                        {% for error in formulario.descripcion.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Imagen</label>
+                <div class="image-control">
+                    <div class="image-buttons">
+                        <label for="id_imagen" class="btn-upload">
+                            Seleccionar imagen
+                            <input type="file" name="imagen" id="id_imagen" accept="image/*" style="display: none;" onchange="previewImage(this);">
+                        </label>
+                        <button type="button" class="btn-clear" id="clearImage" onclick="clearImagePreview()">
+                            Limpiar
+                        </button>
+                    </div>
+                    {% if formulario.imagen.errors %}
+                        <div class="error-messages">
+                            {% for error in formulario.imagen.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div id="imagePreview" class="image-preview"></div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">Publicar</button>
+                <a href="{% url 'publicaciones' %}" class="btn-cancel">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function previewImage(input) {
+    const preview = document.getElementById('imagePreview');
+    preview.innerHTML = '';
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.alt = 'Vista previa';
+            preview.appendChild(img);
+            preview.style.display = 'block';
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function clearImagePreview() {
+    const input = document.getElementById('id_imagen');
+    const preview = document.getElementById('imagePreview');
+    
+    input.value = '';
+    preview.innerHTML = '';
+    preview.style.display = 'none';
+}
+</script>
+
+{% endblock %}

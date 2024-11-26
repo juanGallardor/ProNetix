@@ -1,0 +1,458 @@
+.container-empresa {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 1000px;
+}
+
+.empresa-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--color-container);
+}
+
+.empresa-header h1 {
+    color: var(--second-text);
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.seccion-info-empresa {
+    background-color: var(--color-background);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.seccion-info-empresa h2 {
+    color: var(--second-text);
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-container);
+}
+
+.campo-info {
+    margin-bottom: 1.2rem;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.campo-info label {
+    color: var(--second-text);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.campo-info p {
+    color: var(--color-text);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.seccion-ofertas {
+    margin-top: 2rem;
+}
+
+.seccion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.lista-publicaciones {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.publicacion-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.publicacion-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.publicacion-card h3 {
+    color: var(--second-text);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.fecha-publicacion {
+    color: var(--color-text);
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.lista-postulaciones {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.postulacion-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid var(--color-container);
+}
+
+.estado-postulacion {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    background-color: var(--color-background);
+    color: var(--second-text);
+    margin-bottom: 1rem;
+}
+
+.boton-editar,
+.boton-publicar {
+    background-color: var(--color-container);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}
+
+.boton-publicar {
+    background-color: var(--second-text);
+}
+
+.boton-editar:hover,
+.boton-publicar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.enlace-accion {
+    color: var(--second-text);
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.enlace-accion:hover {
+    color: var(--color-container);
+}
+
+.seccion-ofertas {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.ofertas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-container);
+}
+
+.ofertas-header h2 {
+    color: var(--second-text);
+    font-size: 1.4rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.boton-agregar {
+    background-color: var(--color-container);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.boton-agregar:hover {
+    background-color: var(--second-text);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.lista-ofertas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.oferta {
+    background-color: var(--color-background);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(142, 172, 205, 0.2);
+}
+
+.oferta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.oferta h3 {
+    color: var(--second-text);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.oferta p {
+    color: var(--color-text);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.acciones-oferta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.boton-ver {
+    background-color: var(--color-container);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.boton-ver:hover {
+    background-color: var(--second-text);
+    transform: translateY(-2px);
+}
+
+.seccion-postulaciones {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.seccion-postulaciones h2 {
+    color: var(--second-text);
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-container);
+}
+
+.lista-postulaciones {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.postulacion {
+    background-color: var(--color-background);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(142, 172, 205, 0.2);
+}
+
+.postulacion:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.info-postulacion {
+    margin-bottom: 1.5rem;
+}
+
+.info-postulacion h3 {
+    color: var(--second-text);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.info-postulacion p {
+    color: var(--color-text);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.acciones-postulacion {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.boton-actualizar {
+    background-color: var(--second-text);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.boton-actualizar:hover {
+    background-color: var(--color-container);
+    transform: translateY(-2px);
+}
+
+.sin-ofertas,
+.sin-postulaciones {
+    text-align: center;
+    color: var(--color-text);
+    padding: 2rem;
+    background-color: var(--color-background);
+    border-radius: 8px;
+    font-style: italic;
+}
+
+.form-group {
+    margin-bottom: 1.8rem;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    color: var(--second-text);
+    font-weight: 500;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--color-container);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background-color: var(--color-background);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--second-text);
+    box-shadow: 0 0 0 3px rgba(114, 153, 197, 0.2);
+    background-color: white;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.texto-ayuda {
+    display: block;
+    color: var(--second-text);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+ 
+    font-style: italic;
+}
+
+.estado-activo,
+.estado-inactivo {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.estado-activo {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.estado-inactivo {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.estado-activo,
+.estado-inactivo {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.estado-activo {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.estado-inactivo {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .container-empresa {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    .empresa-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .lista-publicaciones {
+        grid-template-columns: 1fr;
+    }
+
+    .seccion-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .boton-editar,
+    .boton-publicar {
+        width: 100%;
+        justify-content: center;
+    }
+}

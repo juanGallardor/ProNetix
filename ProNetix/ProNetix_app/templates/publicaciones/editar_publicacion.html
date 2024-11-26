@@ -1,0 +1,80 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}Editar Publicación - ProNetix{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/publicacion.css' %}">
+
+<div class="ver-postulaciones-container">
+    <div class="header-actions">
+        <a href="{% url 'publicaciones' %}">Volver a publicaciones</a>
+    </div>
+
+    <div class="details-card formulario-publicacion">
+        <h1 class="form-title">
+            {% if es_oferta_trabajo %}
+                Editar Oferta de Trabajo
+            {% else %}
+                Editar Publicación
+            {% endif %}
+        </h1>
+
+        <form method="POST" enctype="multipart/form-data" class="publication-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_titulo" class="form-label">
+                    Título de la publicación*
+                </label>
+                {{ formulario.titulo }}
+                {% if formulario.titulo.errors %}
+                    <div class="error-messages">
+                        {% for error in formulario.titulo.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_descripcion" class="form-label">
+                    Descripción*
+                </label>
+                {{ formulario.descripcion }}
+                {% if formulario.descripcion.errors %}
+                    <div class="error-messages">
+                        {% for error in formulario.descripcion.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Imagen</label>
+                <div class="image-control">
+                    <div class="image-buttons">
+                        <label for="id_imagen" class="btn-upload">
+                            Seleccionar imagen
+                        </label>
+                        <button type="button" class="btn-clear" id="clearImage">
+                            Limpiar
+                        </button>
+                    </div>
+                    {{ formulario.imagen }}
+                    <div id="imagePreview" class="image-preview">
+                        {% if formulario.imagen.value %}
+                            <img src="{{ formulario.imagen.value.url }}" alt="Vista previa">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">Guardar cambios</button>
+                <a href="{% url 'publicaciones' %}" class="btn-cancel">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

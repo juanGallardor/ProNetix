@@ -1,0 +1,68 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}Actualizar Estado de Postulación - ProNetix{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/empresas.css' %}">
+
+
+<div class="container-empresa">
+
+    <div class="empresa-header">
+        <h1>Actualizar Estado de Postulación</h1>
+    </div>
+
+    <div class="seccion-info-empresa">
+        <h2>Información de la Postulación</h2>
+
+        <div class="info-postulacion">
+            <div class="campo-info">
+                <label>Candidato</label>
+                <p>{{ postulacion.usuario.get_full_name }}</p>
+            </div>
+
+            <div class="campo-info">
+                <label>Oferta de trabajo</label>
+                <p>{{ postulacion.publicacion.titulo }}</p>
+            </div>
+
+            <div class="campo-info">
+                <label>Fecha de postulación</label>
+                <p>{{ postulacion.fecha_postulacion|date:"d/m/Y" }}</p>
+            </div>
+
+            <div class="campo-info">
+                <label>Estado actual</label>
+                <p>{{ postulacion.get_estado_display }}</p>
+            </div>
+
+            {% if postulacion.mensaje %}
+            <div class="campo-info">
+                <label>Mensaje del candidato</label>
+                <p>{{ postulacion.mensaje }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <form method="POST" class="seccion-info-empresa">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="estado">Nuevo Estado</label>
+            <select name="estado" id="estado" class="form-control">
+                <option value="">Seleccione un estado</option>
+                <option value="PENDIENTE">Pendiente</option>
+                <option value="ENTREVISTA">En proceso de entrevista</option>
+                <option value="ACEPTADO">Aceptado</option>
+                <option value="RECHAZADO">Rechazado</option>
+            </select>
+        </div>
+
+        <div class="botones-accion">
+            <button type="submit" class="boton-actualizar">Actualizar Estado</button>
+            <a href="{% url 'mi_empresa' %}" class="boton-actualizar">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

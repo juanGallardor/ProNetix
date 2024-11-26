@@ -1,0 +1,60 @@
+{% extends 'pronetix/base.html' %}
+{% load static %}
+{% block title %}Registro - ProNetix{% endblock %}
+
+{% block content %}
+<div class="contenedor-registro">
+    <link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/auth.css' %}">
+    <h1>Crear cuenta</h1>
+    
+    <div class="divisor">o</div>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        {% if form.errors %}
+            <div class="mensajes-error">
+                {% for field in form %}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <div class="mensaje-error">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="campo-formulario">
+            <input type="text" name="first_name" placeholder="Nombre" required>
+        </div>
+
+        <div class="campo-formulario">
+            <input type="text" name="last_name" placeholder="Apellido" required>
+        </div>
+
+        <div class="campo-formulario">
+            <input type="email" name="email" placeholder="Correo electrónico" required>
+        </div>
+
+        <div class="campo-formulario">
+            <input type="text" name="username" placeholder="Nombre de usuario" required>
+        </div>
+
+        <div class="campo-formulario">
+            <input type="password" name="password1" placeholder="Contraseña" required>
+        </div>
+
+        <div class="campo-formulario">
+            <input type="password" name="password2" placeholder="Confirmar contraseña" required>
+        </div>
+        
+
+        <button type="submit" class="boton-principal">Registrarse</button>
+    </form>
+
+    <div class="enlaces-adicionales">
+        <span>¿Ya tienes cuenta? </span>
+        <a href="{% url 'login' %}">Iniciar sesión</a>
+    </div>
+</div>
+{% endblock %}

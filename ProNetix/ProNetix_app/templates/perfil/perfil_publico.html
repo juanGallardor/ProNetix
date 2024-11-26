@@ -1,0 +1,49 @@
+{% extends 'pronetix/base.html' %}
+{% load static %}
+{% block title %}Perfil de {{ perfil.usuario.get_full_name }} - ProNetix{% endblock %}
+
+{% block content %}
+<div class="contenedor-perfil-publico">
+    <link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/profile.css' %}">
+    <div class="informacion-perfil">
+        <h1>{{ perfil.usuario.get_full_name }}</h1>
+        
+        <div class="seccion-perfil datos-principales">
+            <p class="profesion">{{ perfil.profesion }}</p>
+            <p class="ubicacion">{{ perfil.ubicacion }}</p>
+            <p class="modalidad">{{ perfil.get_modalidad_preferida_display }}</p>
+        </div>
+
+        <div class="seccion-perfil habilidades">
+            <h2>Habilidades</h2>
+            <div class="lista-habilidades">
+                {{ perfil.habilidades|linebreaks }}
+            </div>
+        </div>
+
+        <div class="seccion-perfil biografia">
+            <h2>Biografía</h2>
+            <div class="texto-biografia">
+                {{ perfil.biografia|linebreaks }}
+            </div>
+        </div>
+
+        <div class="seccion-perfil documentos">
+            <h2>Documentos y Certificaciones</h2>
+            {% if documentos %}
+                <div class="lista-documentos">
+                    {% for documento in documentos %}
+                        <div class="documento">
+                            <h3>{{ documento.titulo }}</h3>
+                            <p>{{ documento.get_tipo_display }} - {{ documento.institucion }}</p>
+                            <p>Fecha de emisión: {{ documento.fecha_emision }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="sin-documentos">No hay documentos disponibles.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

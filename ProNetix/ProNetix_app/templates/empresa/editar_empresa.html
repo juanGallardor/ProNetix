@@ -1,0 +1,43 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}Editar Empresa - ProNetix{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/empresas.css' %}">
+
+<div class="container-empresa">
+    <div class="empresa-header">
+        <h1>Editar Empresa</h1>
+    </div>
+
+    {% if messages %}
+    <div class="mensajes">
+        {% for message in messages %}
+        <div class="{% if message.tags == 'error' %}mensaje-error{% else %}mensaje-exito{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in formulario %}
+        <div class="form-group">
+            <label>{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+            <div class="mensaje-error">
+                {{ field.errors }}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div class="botones-accion">
+            <button type="submit" class="boton-guardar">Guardar Cambios</button>
+            <a href="{% url 'ver_empresas' %}" class="boton-cancelar">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

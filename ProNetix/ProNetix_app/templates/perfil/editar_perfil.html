@@ -1,0 +1,89 @@
+{% extends 'pronetix/base.html' %}
+{% load static %}
+{% block title %}Editar Perfil - ProNetix{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/profile.css' %}">
+<div class="editar-perfil-container">
+    <div class="editar-perfil-header">
+        <h1>Editar Perfil</h1>
+    </div>
+
+    <form method="POST" class="formulario-editar" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {% if form.errors %}
+            <div class="mensajes-error">
+                {% for field in form %}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <div class="mensaje-error">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="seccion-form info-personal">
+            <h2>Información Personal</h2>
+            
+            <div class="campo-form">
+                <label for="id_first_name">Nombre:</label>
+                <input type="text" name="first_name" id="id_first_name" value="{{ user.first_name }}" required>
+            </div>
+
+            <div class="campo-form">
+                <label for="id_last_name">Apellido:</label>
+                <input type="text" name="last_name" id="id_last_name" value="{{ user.last_name }}" required>
+            </div>
+
+            <div class="campo-form">
+                <label for="id_profesion">Profesión:</label>
+                <input type="text" name="profesion" id="id_profesion" 
+                       value="{{ formulario.profesion.value|default:user.perfil.profesion }}" 
+                       class="input-editable" placeholder="Ej: Desarrollador Full Stack">
+            </div>
+
+            <div class="campo-form">
+                <label for="id_ubicacion">Ubicación:</label>
+                <input type="text" name="ubicacion" id="id_ubicacion" 
+                       value="{{ formulario.ubicacion.value|default:user.perfil.ubicacion }}"
+                       class="input-editable" placeholder="Ej: Bogotá, Colombia">
+            </div>
+
+            <div class="campo-form">
+                <label for="id_modalidad_preferida">Modalidad de Trabajo Preferida:</label>
+                <select name="modalidad_preferida" id="id_modalidad_preferida" class="select-editable">
+                    <option value="">Selecciona una modalidad</option>
+                    <option value="REMOTO" {% if user.perfil.modalidad_preferida == 'REMOTO' %}selected{% endif %}>Remoto</option>
+                    <option value="HIBRIDO" {% if user.perfil.modalidad_preferida == 'HIBRIDO' %}selected{% endif %}>Híbrido</option>
+                    <option value="PRESENCIAL" {% if user.perfil.modalidad_preferida == 'PRESENCIAL' %}selected{% endif %}>Presencial</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="seccion-form">
+            <h2>Biografía</h2>
+            <div class="campo-form">
+                <textarea name="biografia" id="id_biografia" rows="6" class="textarea-editable"
+                          placeholder="Cuéntanos sobre ti y tu experiencia profesional">{{ formulario.biografia.value|default:user.perfil.biografia }}</textarea>
+                <small class="texto-ayuda">Cuéntanos sobre ti y tu experiencia profesional</small>
+            </div>
+        </div>
+
+        <div class="seccion-form">
+            <h2>Habilidades</h2>
+            <div class="campo-form">
+                <textarea name="habilidades" id="id_habilidades" rows="4" class="textarea-editable"
+                          placeholder="Ej: Python, Django, JavaScript, React">{{ formulario.habilidades.value|default:user.perfil.habilidades }}</textarea>
+                <small class="texto-ayuda">Ingresa tus habilidades separadas por comas</small>
+            </div>
+        </div>
+
+        <div class="botones-form">
+            <button type="submit" class="boton-guardar">Guardar Cambios</button>
+            <a href="{% url 'perfil' %}" class="boton-cancelar">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

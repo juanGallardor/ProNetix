@@ -1,0 +1,50 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}Postulaciones - {{ publicacion.titulo }}{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/publicacion.css' %}">
+
+<div class="ver-postulaciones-container">
+    <div class="header-actions">
+        <a href="{% url 'ver_publicacion' publicacion.id %}">
+            Volver a la publicación
+        </a>
+    </div>
+
+    <div class="details-card">
+        <h1>Postulaciones para: {{ publicacion.titulo }}</h1>
+
+        {% if postulaciones %}
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Fecha de postulación</th>
+                            <th>Mensaje</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for postulacion in postulaciones %}
+                            <tr>
+                                <td>{{ postulacion.usuario.get_full_name }}</td>
+                                <td>{{ postulacion.fecha_postulacion|date:"d/m/Y" }}</td>
+                                <td>{{ postulacion.mensaje|default:"Sin mensaje" }}</td>
+                                <td>
+                                    <a href="#" class="action-btn">Ver perfil</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>No se han recibido postulaciones para esta oferta.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

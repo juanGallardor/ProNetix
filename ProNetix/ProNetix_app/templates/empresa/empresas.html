@@ -1,0 +1,128 @@
+{% extends 'pronetix/base.html' %}
+{% block title %}Empresas - ProNetix{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ProNetix_app/css/empresa.css' %}">
+
+<div class="empresas-layout">
+    <aside class="sidebar-section">
+        <h2>Empresas</h2>
+        <div class="empresas-list">
+            {% if empresas %}
+            {% for empresa in empresas %}
+            <div class="empresa-preview {% if empresa.id == empresa_actual.id %}active{% endif %}" 
+            data-empresa-id="{{ empresa.id }}">
+                <h3>{{ empresa.nombre_empresa }}</h3>
+                {% if empresa.ubicacion %}
+                <p>{{ empresa.ubicacion }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+            {% else %}
+                <p>No hay empresas disponibles</p>
+            {% endif %}
+        </div>
+    </aside>
+
+    <main class="empresas-content" id="detalles-empresa">
+        {% if empresa_actual %}
+        <div class="empresa-detail">
+            <h2>{{ empresa_actual.nombre_empresa }}</h2>
+            
+            <div class="empresa-info-section">
+                <h3>Información General</h3>
+                {% if empresa_actual.descripcion %}
+                <p>{{ empresa_actual.descripcion }}</p>
+                {% endif %}
+            </div>
+
+            <div class="empresa-info-section">
+                <h3>Ubicación</h3>
+                <p>{{ empresa_actual.ubicacion }}</p>
+            </div>
+
+            {% if empresa_actual.sitio_web %}
+            <div class="empresa-info-section">
+                <h3>Sitio Web</h3>
+                <a href="{{ empresa_actual.sitio_web }}" target="_blank" class="mi-empresa-button">
+                    Visitar sitio web
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="no-empresa-selected">
+            <p>Selecciona una empresa para ver sus detalles</p>
+        </div>
+        {% endif %}
+    </main>
+
+    <aside class="acciones-section">
+        <h2>Acciones</h2>
+        <div class="acciones-list">
+            {% if user.is_authenticated %}
+                {% if puede_crear %}
+                <a href="{% url 'crear_empresa' %}" class="mi-empresa-button">
+                    Registrar Nueva Empresa
+                </a>
+                {% endif %}
+                {% if user.empresas.exists %}
+                <a href="{% url 'mi_empresa' %}" class="mi-empresa-button">
+                    Gestionar Mi Empresa
+                </a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </aside>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function cargarDetallesEmpresa(elemento, empresaId) {
+            document.querySelectorAll('.empresa-preview').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            elemento.classList.add('active');
+    
+
+            fetch(`/empresas/detalles/${empresaId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    const detallesContainer = document.getElementById('detalles-empresa');
+                    if (detallesContainer) {
+                        detallesContainer.innerHTML = `
+                            <div class="empresa-detail">
+                                <h2>${data.nombre_empresa}</h2>
+                                <div class="empresa-info-section">
+                                    <h3>Información General</h3>
+                                    <p>${data.descripcion || ''}</p>
+                                </div>
+                                <div class="empresa-info-section">
+                                    <h3>Ubicación</h3>
+                                    <p>${data.ubicacion || ''}</p>
+                                </div>
+                                ${data.sitio_web ? `
+                                    <div class="empresa-info-section">
+                                        <h3>Sitio Web</h3>
+                                        <a href="${data.sitio_web}" class="mi-empresa-button" target="_blank">
+                                            Visitar sitio web
+                                        </a>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        document.querySelectorAll('.empresa-preview').forEach(element => {
+            element.addEventListener('click', function() {
+                cargarDetallesEmpresa(this, this.dataset.empresaId);
+            });
+        });
+    });
+    </script>
+    
+{% endblock %}
